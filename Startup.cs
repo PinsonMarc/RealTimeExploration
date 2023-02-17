@@ -7,6 +7,8 @@ namespace RealTimeExploration
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+            services.AddControllers();
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -20,8 +22,11 @@ namespace RealTimeExploration
 
             app.UseRouting();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<ChatHub>("/chat");
             });
         }
